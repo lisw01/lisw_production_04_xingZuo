@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="gb2312">
+    <title>面向对象 location</title>
+    <link rel="stylesheet" href="css/xingzuo.css"/>
+    <link rel="shortcut icon" href="lisw.ico"/>
+</head>
+
+<body>
+<img class="logo" width="270" src="images/logo.png" alt="">
+<p class="links">
+    <a href="http://news.baidu.com" target="_blank">新闻</a>
+    <a href="http://www.baidu.com" target="_blank">网页</a>
+    <a href="http://tieba.baidu.com" target="_blank">贴吧</a>
+    <a href="http://zhidao.baidu.com" target="_blank">知道</a>
+    <a href="http://music.baidu.com" target="_blank">音乐</a>
+    <a href="http://image.baidu.com" target="_blank">图片</a>
+    <a href="http://v.baidu.com" target="_blank">视频</a>
+    <a href="http://map.baidu.com" target="_blank">地图</a>
+    <a href="http://baike.baidu.com" target="_blank">百科</a>
+    <a href="http://wenku.baidu.com" target="_blank">文库</a>
+    <a href="http://www.baidu.com/more/" target="_blank">更多&gt;&gt;</a>
+</p>
+<div class="search">
+    <input type="text" placeholder="请点击页面中星座,跳转相对页面"/><button>搜索一下</button>
+
+</div>
+<div class="container">
+    <div class="menu">
+        <span>导航</span>
+        <span>音乐</span>
+        <span>新闻</span>
+        <span class="choose">星座</span>
+    </div>
+    <div class="card">
+        <div class="xingzuo">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src='js/jquery-1.11.3.js'></script>
+<script src='js/lisw.js'></script>
+<script>
+    $(function () {
+        var data = [
+            {
+                name: '白羊座',
+                time: '3.21-4.19'
+            }
+            , {
+                name: '金牛座',
+                time: '4.20-5.20'
+            }
+            , {
+                name: '双子座',
+                time: '5.21-6.21'
+            }
+            , {
+                name: '巨蟹座',
+                time: '6.22-7.22'
+            }
+            , {
+                name: '狮子座',
+                time: '7.23-8.22'
+            }
+            , {
+                name: '处女座',
+                time: '8.23-9.22'
+            }
+            , {
+                name: '天秤座',
+                time: '9.23-10.23'
+            }
+            , {
+                name: '天蝎座',
+                time: '10.24-11.22'
+            }
+            , {
+                name: '射手座',
+                time: '11.23-12.21'
+            }
+            , {
+                name: '摩羯座',
+                time: '12.22-1.19'
+            }
+            , {
+                name: '水瓶座',
+                time: '1.20-2.18'
+            }
+            , {
+                name: '双鱼座',
+                time: '2.19-3.20'
+            }
+        ];
+
+        function Xingzuo(data, num) {
+            this.data = data;
+            this.dom = $('<div></div>').addClass('item num-' + num + '');
+            this.num = num;
+            this.confing = {
+                jconfing: $('.xingzuo')
+            };
+            this.init()
+
+        }
+        Xingzuo.prototype = {
+            init: function () {
+                this.bindDom();
+                this.bindFn();
+            },
+            bindDom: function () {
+                var str = '';
+                str += '<div class="image"></div>';
+                str += '<div class="description">';
+                str += '<p class="name">@(name)</p>';
+                str += '<p class="time">@(time)</p>';
+                str += '<div class="mark"></div>';
+                str += '</div>';
+                this.dom.html(lisw.formateString(str, this.data), true).appendTo(this.confing.jconfing);
+            },
+            bindFn: function () {
+                var that =this;
+
+                this.dom.on('mouseenter',function(){
+                    that.dom.addClass('is-hover')
+                });
+                this.dom.on('mouseleave', function () {
+                    that.dom.removeClass('is-hover');
+                });
+                this.dom.on('click', function () {
+                    that.dom.toggleClass('selected');
+                    window.location = 'detail.html?num='+that.num;
+                    console.log(that.num)
+                });
+
+
+            }
+        };
+
+        for (var i = 0; i < data.length; i++) {
+            new Xingzuo(data[i],i);
+        }
+
+
+    });
+</script>
